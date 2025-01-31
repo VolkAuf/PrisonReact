@@ -1,12 +1,16 @@
 import "./App.css";
-import Authorization from "./components/auth/Authorization.tsx";
+import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
+import Authorization from "./components/authorization/Authorization.tsx";
+import Registration from "./components/registration/Registration.tsx";
 
-function App() {
+export default function App() {
   return (
-    <>
-      <Authorization></Authorization>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/" element={<Authorization />} />
+        <Route path="/registration" element={<Registration />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
