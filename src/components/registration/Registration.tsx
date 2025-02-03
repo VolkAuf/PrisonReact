@@ -1,6 +1,6 @@
 import { FormEvent, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import bcrypt from "bcryptjs";
+//import bcrypt from "bcryptjs";
 import "./Registration.css";
 import crocoImage from "../../assets/croc.png";
 import { User } from "../../entities/User.module.ts";
@@ -11,6 +11,7 @@ export default function Registration() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
+  // TODO: move to userApi.ts
   const checkIsUserExists = async (user: User) => {
     return fetch(
       "https://67a0bf435bcfff4fabe07668.mockapi.io/crocoApi/crocoUsers",
@@ -57,7 +58,8 @@ export default function Registration() {
     const user: User = {
       nickname: data["nickname"] as string,
       email: data["email"] as string,
-      password: bcrypt.hashSync(data["password"].toString(), 8),
+      //password: bcrypt.hashSync(data["password"].toString()),
+      password: data["password"] as string,
     };
 
     try {

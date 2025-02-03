@@ -1,15 +1,55 @@
-import "./Authorization.css";
-import crocoImage from "../../assets/croc.png";
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Authorization.css";
+import crocoImage from "../../assets/croc.png";
+import { User, UserCredentials } from "../../entities/User.module.ts";
+//import bcrypt from "bcryptjs";
+import Loader from "../loader/Loader.tsx";
 
 export default function Authorization() {
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  // TODO: move to userApi.ts
+  const getUserByCredentials = async (userCredentials: UserCredentials) => {
+    return fetch(
+      "https://67a0bf435bcfff4fabe07668.mockapi.io/crocoApi/crocoUsers",
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.length > 0) {
+          return (data as User[]).find(
+            (value) =>
+              value.email === userCredentials.email &&
+              //bcrypt.compareSync(value.password, userCredentials.password),
+              value.password === userCredentials.password,
+          );
+        }
+        return null;
+      });
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+
+    const userCredentials: UserCredentials = {
+      email: data["email"] as string,
+      password: data["password"] as string,
+    };
+
+    try {
+      const user = await getUserByCredentials(userCredentials);
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+        navigate("/home");
+      } else alert("Invalid Credentials");
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCreateAccount = () => {
@@ -26,7 +66,7 @@ export default function Authorization() {
             className="mx-auto h-25 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-300">
-            🐊 Sign in to your croc account 🐊
+            🐊 Sign in to your croco account 🐊
           </h2>
         </div>
 
@@ -51,9 +91,6 @@ export default function Authorization() {
                   type="email"
                   required
                   autoComplete="email"
-                  onChange={(e) => {
-                    setLogin(e.currentTarget.value);
-                  }}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-500 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
@@ -83,9 +120,6 @@ export default function Authorization() {
                   type="password"
                   required
                   autoComplete="current-password"
-                  onChange={(e) => {
-                    setPassword(e.currentTarget.value);
-                  }}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-500 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
@@ -109,6 +143,7 @@ export default function Authorization() {
           </form>
         </div>
       </div>
+      {isLoading && <Loader />}
     </>
   );
 }
