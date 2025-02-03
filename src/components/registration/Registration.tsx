@@ -1,14 +1,74 @@
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs";
 import "./Registration.css";
 import crocoImage from "../../assets/croc.png";
-import { useNavigate } from "react-router-dom";
+import { User } from "../../entities/User.module.ts";
+import Loader from "../loader/Loader.tsx";
 
 export default function Registration() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const checkIsUserExists = async (user: User) => {
+    return fetch(
+      "https://67a0bf435bcfff4fabe07668.mockapi.io/crocoApi/crocoUsers",
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.length > 0) {
+          const value = (data as User[]).find(
+            (value) => value.email === user.email,
+          );
+          if (value) return true;
+        }
+        return false;
+      });
+  };
+
+  const createUser = async (user: User) => {
+    return fetch(
+      "https://67a0bf435bcfff4fabe07668.mockapi.io/crocoApi/crocoUsers",
+      {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(user),
+      },
+    );
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!e.currentTarget.checkValidity()) return;
+    setIsLoading(true);
+
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+    /*if (localStorage.getItem(`user_${data["email"]}`)) {
+      alert("Email address already exists!");
+      return;
+    }*/
+
+    const user: User = {
+      nickname: data["nickname"] as string,
+      email: data["email"] as string,
+      password: bcrypt.hashSync(data["password"].toString(), 8),
+    };
+
+    try {
+      const isUserExists = await checkIsUserExists(user);
+      if (isUserExists) throw new Error("User already exists!"); //TODO: make error handler
+      await createUser(user);
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleRepeatedPasswordChange = (e: FormEvent<HTMLInputElement>) => {
@@ -126,6 +186,7 @@ export default function Registration() {
             </div>
           </form>
         </div>
+        {isLoading && <Loader />}
       </div>
     </>
   );
