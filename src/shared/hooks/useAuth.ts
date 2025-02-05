@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AuthContext } from "../auth/AuthContext.ts";
+import { AuthContext } from "../../features/auth/AuthContext.ts";
 import { User, UserSessionData } from "../../entities/User.module.ts";
 
 export const useAuth = () => {

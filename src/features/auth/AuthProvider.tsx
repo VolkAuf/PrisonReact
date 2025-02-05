@@ -4,19 +4,19 @@ import { useCookies } from "react-cookie";
 import { AuthContext } from "./AuthContext.ts";
 
 export interface AuthContextInterface {
-  userSessionData: UserSessionData | null;
+  userSessionData: UserSessionData | null | undefined;
   login: (data: UserSessionData) => void;
   logout: () => void;
 }
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const [userSessionData, setUserSessionData] =
-    useState<UserSessionData | null>(null);
+  const [userSessionData, setUserSessionData] = useState<UserSessionData | null | undefined>(undefined);
   const [cookies, setCookies, removeCookies] = useCookies();
 
   useEffect(() => {
     const userSessionData = cookies["usd"];
     if (userSessionData) setUserSessionData(userSessionData as UserSessionData);
+    else setUserSessionData(null);
   }, []);
 
   const login = (userSD: UserSessionData) => {
@@ -29,9 +29,5 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     setUserSessionData(null);
   };
 
-  return (
-    <AuthContext.Provider value={{ userSessionData, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ userSessionData, login, logout }}>{children}</AuthContext.Provider>;
 }
