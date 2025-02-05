@@ -1,14 +1,19 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Authorization.css";
 import crocoImage from "../../assets/croc.png";
 import { User, UserCredentials } from "../../entities/User.module.ts";
 //import bcrypt from "bcryptjs";
-import Loader from "../loader/Loader.tsx";
+import Loader from "../../components/loader/Loader.tsx";
+import { useAuth } from "../hooks/useAuth.ts";
 
 export default function Authorization() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const { sessionData, login } = useAuth();
+
+  useEffect(() => {
+    if (sessionData) navigate("/home");
+  }, [sessionData]);
 
   // TODO: move to userApi.ts
   const getUserByCredentials = async (userCredentials: UserCredentials) => {
@@ -42,7 +47,7 @@ export default function Authorization() {
     try {
       const user = await getUserByCredentials(userCredentials);
       if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
+        login(user);
         navigate("/home");
       } else alert("Invalid Credentials");
     } catch (error) {

@@ -1,15 +1,20 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 //import bcrypt from "bcryptjs";
-import "./Registration.css";
 import crocoImage from "../../assets/croc.png";
 import { User } from "../../entities/User.module.ts";
-import Loader from "../loader/Loader.tsx";
+import Loader from "../../components/loader/Loader.tsx";
+import { useAuth } from "../hooks/useAuth.ts";
 
 export default function Registration() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const { sessionData, login } = useAuth();
+
+  useEffect(() => {
+    if (sessionData) navigate("/home");
+  }, [sessionData]);
 
   // TODO: move to userApi.ts
   const checkIsUserExists = async (user: User) => {
@@ -50,10 +55,6 @@ export default function Registration() {
     setIsLoading(true);
 
     const data = Object.fromEntries(new FormData(e.currentTarget));
-    /*if (localStorage.getItem(`user_${data["email"]}`)) {
-      alert("Email address already exists!");
-      return;
-    }*/
 
     const user: User = {
       nickname: data["nickname"] as string,
@@ -66,6 +67,8 @@ export default function Registration() {
       const isUserExists = await checkIsUserExists(user);
       if (isUserExists) throw new Error("User already exists!"); //TODO: make error handler
       await createUser(user);
+      login(user);
+      navigate("/home");
     } catch (error) {
       alert(error);
     } finally {
