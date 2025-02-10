@@ -5,6 +5,10 @@ import { User, UserSessionData } from "../../entities/User.module.ts";
 export const useAuth = () => {
   const authContext = useContext(AuthContext);
 
+  const isTempUser = (): boolean => {
+    return !!authContext?.userSessionData?.email;
+  };
+
   const login = (user: User) => {
     const userSessionData = user as UserSessionData;
     authContext?.login(userSessionData);
@@ -14,5 +18,5 @@ export const useAuth = () => {
     authContext?.logout();
   };
 
-  return { sessionData: authContext?.userSessionData, login, logout };
+  return { sessionData: authContext?.userSessionData, login, logout, isTempUser };
 };

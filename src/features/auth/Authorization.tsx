@@ -6,6 +6,7 @@ import { UserCredentials } from "../../entities/User.module.ts";
 import Loader from "../../components/loader/Loader.tsx";
 import { useAuth } from "../../shared/hooks/useAuth.ts";
 import { getUserByCredentials } from "./authApi.ts";
+import ContentCard from "../../components/common/ContentCard.tsx";
 
 export default function Authorization() {
   const navigate = useNavigate();
@@ -42,6 +43,16 @@ export default function Authorization() {
     }
   };
 
+  const handleWithoutAuth = () => {
+    const rnd = Math.floor(Math.random() * 100);
+    login({
+      email: "",
+      password: "",
+      nickname: `ruzik${rnd}`,
+    });
+    navigate("/home");
+  };
+
   const handleCreateAccount = () => {
     navigate("/registration");
   };
@@ -49,15 +60,12 @@ export default function Authorization() {
   return (
     <>
       {isPageActive && (
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img alt="Your Company" src={crocoImage} className="mx-auto h-25 w-auto" />
-            <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-300">
-              🐊 Sign in to your croco account 🐊
-            </h2>
-          </div>
-
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <ContentCard>
+          <img alt="Croco Image" src={crocoImage} className="mx-auto h-25 w-auto" />
+          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-300">
+            🐊Sign in to your croco account🐊
+          </h2>
+          <div className="mt-5">
             <form action="#" method="POST" className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="email" className="block text-sm/6 font-medium text-gray-300 text-left">
@@ -101,21 +109,33 @@ export default function Authorization() {
               <div className="flex-row space-y-2">
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-lime-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-lime-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex w-full justify-center rounded-md bg-lime-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-lime-600 "
                 >
                   Sign in
                 </button>
                 <button
                   type="button"
                   onClick={handleCreateAccount}
-                  className="flex w-full justify-center rounded-md bg-green-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex w-full justify-center rounded-md bg-green-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-green-600"
                 >
                   Create Account
                 </button>
               </div>
             </form>
+            <div className="flex items-center w-80 mx-auto my-2">
+              <div className="flex-grow border-t border-gray-500"></div>
+              <span className="px-4 text-gray-500">Or</span>
+              <div className="flex-grow border-t border-gray-500"></div>
+            </div>
+            <button
+              type="button"
+              onClick={handleWithoutAuth}
+              className="flex w-full justify-center rounded-md bg-gray-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-gray-500 "
+            >
+              Continue without Auth
+            </button>
           </div>
-        </div>
+        </ContentCard>
       )}
 
       {(isLoading || !isPageActive) && <Loader />}
