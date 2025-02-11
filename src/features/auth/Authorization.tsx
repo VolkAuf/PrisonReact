@@ -1,24 +1,18 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import crocoImage from "../../assets/croc.png";
-import { UserCredentials } from "../../entities/User.module.ts";
-//import bcrypt from "bcryptjs";
-import Loader from "../../components/loader/Loader.tsx";
+//import bcrypt from "bcryptjs"; //TODO: fix this ya ne znayu
 import { useAuth } from "../../shared/hooks/useAuth.ts";
 import { getUserByCredentials } from "./authApi.ts";
+import { UserCredentials } from "../../entities/User.ts";
+import Loader from "../../components/loader/Loader.tsx";
 import ContentCard from "../../components/common/ContentCard.tsx";
+import crocoImage from "../../assets/croc.png";
 
 export default function Authorization() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isPageActive, setIsPageActive] = useState(false);
   const { sessionData, login } = useAuth();
-
-  useEffect(() => {
-    if (sessionData) navigate("/home");
-    else if (sessionData === undefined) setIsPageActive(false);
-    else setIsPageActive(true);
-  }, [sessionData]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,8 +48,14 @@ export default function Authorization() {
   };
 
   const handleCreateAccount = () => {
-    navigate("/registration");
+    navigate("/signUp");
   };
+
+  useEffect(() => {
+    if (sessionData) navigate("/home");
+    else if (sessionData === undefined) setIsPageActive(false);
+    else setIsPageActive(true);
+  }, [sessionData]);
 
   return (
     <>
@@ -122,7 +122,8 @@ export default function Authorization() {
                 </button>
               </div>
             </form>
-            <div className="flex items-center w-80 mx-auto my-2">
+
+            <div className="flex items-center w-auto mx-auto my-2">
               <div className="flex-grow border-t border-gray-500"></div>
               <span className="px-4 text-gray-500">Or</span>
               <div className="flex-grow border-t border-gray-500"></div>

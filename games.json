@@ -1,0 +1,49 @@
+{
+  "objects": [
+    {
+      "name": "Analytics",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "icon": "./src/assets/croc.png"
+    },
+    {
+      "name": "Engagement",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "icon": "./src/assets/croc.png"
+    },
+    {
+      "name": "Security",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "icon": "./src/assets/croc.png"
+    },
+    {
+      "name": "Integrations",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "icon": "./src/assets/croc.png"
+    },
+    {
+      "name": "Automations",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "icon": "./src/assets/croc.png"
+    },
+    {
+      "name": "Automations",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "icon": "./src/assets/croc.png"
+    },
+    {
+      "name": "Integrations",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "icon": "./src/assets/croc.png"
+    },
+    {
+      "name": "Security",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "icon": "./src/assets/croc.png"
+    },
+    {
+      "name": "Analytics",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "icon": "./src/assets/croc.png"
+    }
+  ]
+}

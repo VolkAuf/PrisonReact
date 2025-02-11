@@ -1,6 +1,6 @@
-import axiosAuth from "../../shared/libs/axios.ts";
-import { User, UserCredentials } from "../../entities/User.module.ts";
 import { AxiosResponse } from "axios";
+import { axiosAuth } from "../../shared/libs/axios.ts";
+import { User, UserCredentials } from "../../entities/User.ts";
 
 export const checkIfUserExists = async (user: User) => {
   return axiosAuth.get("/crocoUsers").then(({ data }: AxiosResponse<User[]>) => {

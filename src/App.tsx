@@ -9,15 +9,17 @@ import CreateLobby from "./features/hub/CreateLobby.tsx";
 export default function App() {
   return (
     <AuthProvider>
-      <Header />
       <BrowserRouter>
-        <Routes>
-          <Route path="*" element={<Navigate to="/" />} />
-          <Route path="/" element={<Authorization />} />
-          <Route path="/registration" element={<Registration />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/createlobby" element={<CreateLobby />} />
-        </Routes>
+        <div className="max-sm:mt-14 mt-20">
+          <Routes>
+            <Route path="*" element={<Navigate to="/signIn" />} />
+            <Route path="/signIn" element={<Authorization />} />
+            <Route path="/signUp" element={<Registration />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/createLobby" element={<CreateLobby />} />
+          </Routes>
+          <Header />
+        </div>
       </BrowserRouter>
     </AuthProvider>
   );

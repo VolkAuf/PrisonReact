@@ -1,12 +1,12 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import bcrypt from "bcryptjs";
-import crocoImage from "../../assets/croc.png";
-import { User } from "../../entities/User.module.ts";
-import Loader from "../../components/loader/Loader.tsx";
+//import bcrypt from "bcryptjs"; //TODO: see Authorization.tsx
+import { User } from "../../entities/User.ts";
 import { useAuth } from "../../shared/hooks/useAuth.ts";
 import { checkIfUserExists, createUser } from "./authApi.ts";
+import Loader from "../../components/loader/Loader.tsx";
 import ContentCard from "../../components/common/ContentCard.tsx";
+import crocoImage from "../../assets/croc.png";
 
 export default function Registration() {
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -14,12 +14,6 @@ export default function Registration() {
   const [isLoading, setIsLoading] = useState(false);
   const [isPageActive, setIsPageActive] = useState(false);
   const { sessionData, login } = useAuth();
-
-  useEffect(() => {
-    if (sessionData) navigate("/home");
-    else if (sessionData === undefined) setIsPageActive(false);
-    else setIsPageActive(true);
-  }, [sessionData]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,13 +44,19 @@ export default function Registration() {
 
   const handleRepeatedPasswordChange = (e: FormEvent<HTMLInputElement>) => {
     e.currentTarget.setCustomValidity(
-      passwordRef.current?.value !== e.currentTarget.value ? "Пароли не совпадают" : "",
+      passwordRef.current?.value !== e.currentTarget.value ? "Passwords did not match" : "",
     );
   };
 
   const handleSignIn = () => {
-    navigate("/");
+    navigate("/signIn");
   };
+
+  useEffect(() => {
+    if (sessionData) navigate("/home");
+    else if (sessionData === undefined) setIsPageActive(false);
+    else setIsPageActive(true);
+  }, [sessionData]);
 
   return (
     <>

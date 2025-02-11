@@ -1,41 +1,28 @@
 import { useEffect } from "react";
-import {
-  ArrowPathIcon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-} from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../shared/hooks/useAuth.ts";
+import { Game } from "../../entities/Game.ts";
 import ContentCard from "../../components/common/ContentCard.tsx";
-import crocoImage from "../../assets/croc.png";
 import GameCard from "../games/GameCard.tsx";
+import gameList from "../../../games.json";
 
 export default function Home() {
-  const loremDesc =
-    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti";
-  useEffect(() => {});
+  const navigate = useNavigate();
+  const { sessionData } = useAuth();
 
-  const solutions = [
-    { name: "Analytics", description: loremDesc, href: "#", icon: ChartPieIcon },
-    { name: "Engagement", description: loremDesc, href: "#", icon: CursorArrowRaysIcon },
-    { name: "Security", description: loremDesc, href: "#", icon: FingerPrintIcon },
-    { name: "Integrations", description: loremDesc, href: "#", icon: SquaresPlusIcon },
-    { name: "Automations", description: loremDesc, href: "#", icon: ArrowPathIcon },
-    { name: "Automations", description: loremDesc, href: "#", icon: ArrowPathIcon },
-    { name: "Integrations", description: loremDesc, href: "#", icon: SquaresPlusIcon },
-    { name: "Automations", description: loremDesc, href: "#", icon: ArrowPathIcon },
-    { name: "Automations", description: loremDesc, href: "#", icon: ArrowPathIcon },
-  ];
+  const games: Game[] = gameList.objects;
+
+  useEffect(() => {
+    if (!sessionData) navigate("/signIn");
+  }, []);
 
   return (
-    <>
-      <ContentCard>
-        <div className="grid grid-cols-3 gap-5">
-          {solutions.map((item) => (
-            <GameCard key={item.name} name={item.name} description={item.description} imagePath={crocoImage}></GameCard>
-          ))}
-        </div>
-      </ContentCard>
-    </>
+    <ContentCard>
+      <div className="grid gap-5 lg:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1">
+        {games.map((item) => (
+          <GameCard key={item.name} name={item.name} description={item.description} imagePath={item.icon} />
+        ))}
+      </div>
+    </ContentCard>
   );
 }

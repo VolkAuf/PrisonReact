@@ -7,12 +7,19 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background: linear-gradient(#012701, black);
+  background: linear-gradient(#012701, black) fixed;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --color-bad-green: #143914;
+  --color-custom-green: #024501;
+}
+
+.bg-custom-green {
+  background-color: var(--color-custom-green);
 }
 
 body {
