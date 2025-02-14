@@ -13,7 +13,7 @@ export const checkIfUserExists = async (user: User) => {
 };
 
 export const getUserByCredentials = async (credentials: UserCredentials) => {
-  return axiosAuth.get("/crocoUsers").then(({ data }: AxiosResponse<UserCredentials[]>) => {
+  return axiosAuth.get("/crocoUsers").then(({ data }: AxiosResponse<User[]>) => {
     if (data && data.length > 0) {
       return (data as User[]).find(
         (value) => value.email === credentials.email && value.password === credentials.password,
