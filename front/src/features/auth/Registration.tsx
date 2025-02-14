@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import bcrypt from "bcryptjs"; //TODO: see Authorization.tsx
 import { User } from "../../entities/User.ts";
 import { useAuth } from "../../shared/hooks/useAuth.ts";
 import { checkIfUserExists, createUser } from "./authApi.ts";
@@ -25,7 +24,6 @@ export default function Registration() {
     const user: User = {
       nickname: data["nickname"] as string,
       email: data["email"] as string,
-      //password: bcrypt.hashSync(data["password"].toString()),
       password: data["password"] as string,
     };
 

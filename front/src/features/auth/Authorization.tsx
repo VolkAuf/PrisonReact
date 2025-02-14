@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import bcrypt from "bcryptjs"; //TODO: fix this ya ne znayu
 import { useAuth } from "../../shared/hooks/useAuth.ts";
 import { getUserByCredentials } from "./authApi.ts";
 import { UserCredentials } from "../../entities/User.ts";

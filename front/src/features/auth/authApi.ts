@@ -16,10 +16,7 @@ export const getUserByCredentials = async (credentials: UserCredentials) => {
   return axiosAuth.get("/crocoUsers").then(({ data }: AxiosResponse<UserCredentials[]>) => {
     if (data && data.length > 0) {
       return (data as User[]).find(
-        (value) =>
-          value.email === credentials.email &&
-          //bcrypt.compareSync(value.password, userCredentials.password),
-          value.password === credentials.password,
+        (value) => value.email === credentials.email && value.password === credentials.password,
       );
     }
     return null;
