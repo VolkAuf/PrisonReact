@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../shared/hooks/useAuth.ts";
-import { getUserByCredentials } from "./authApi.ts";
+import { loginRequest } from "./authApi.ts";
 import { UserCredentials } from "../../entities/User.ts";
 import Loader from "../../components/loader/Loader.tsx";
 import ContentCard from "../../components/common/ContentCard.tsx";
@@ -24,11 +24,11 @@ export default function Authorization() {
     };
 
     try {
-      const user = await getUserByCredentials(userCredentials);
-      if (user) {
-        login(user);
+      const userRes = await loginRequest(userCredentials);
+      if (userRes?.user) {
+        login(userRes.user);
         navigate("/home");
-      } else alert("Invalid Credentials");
+      } else alert(userRes?.message);
     } catch (error) {
       alert(error);
     } finally {
@@ -37,13 +37,7 @@ export default function Authorization() {
   };
 
   const handleWithoutAuth = () => {
-    const rnd = Math.floor(Math.random() * 100);
-    login({
-      email: "",
-      password: "",
-      nickname: `ruzik${rnd}`,
-    });
-    navigate("/home");
+    alert("not supported yet");
   };
 
   const handleCreateAccount = () => {

@@ -1,14 +1,11 @@
-export interface User extends UserCredentials {
-  nickname: string;
-}
-
 export interface UserCredentials {
   email: string;
   password: string;
+  nickname?: string;
 }
 
-export interface UserSessionData {
+export interface UserSessionData extends Omit<UserCredentials, "password"> {
+  id?: number;
   nickname: string;
-  email: string;
   // TODO: add token later
 }

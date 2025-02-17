@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../features/auth/AuthContext.ts";
-import { User, UserSessionData } from "../../entities/User.ts";
+import { UserSessionData } from "../../entities/User.ts";
 
 export const useAuth = () => {
   const authContext = useContext(AuthContext);
@@ -9,8 +9,7 @@ export const useAuth = () => {
     return !!authContext?.userSessionData?.email;
   };
 
-  const login = (user: User) => {
-    const userSessionData = user as UserSessionData;
+  const login = (userSessionData: UserSessionData) => {
     authContext?.login(userSessionData);
   };
 

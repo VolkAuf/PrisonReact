@@ -33,10 +33,9 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 bg-custom-green">
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-3 lg:px-8">
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <img alt="croc.png" src={crocoImage} className="h-8 w-auto" />
-          </a>
+          <span className="sr-only">Your Company</span>
+          <img alt="croc.png" src={crocoImage} className="h-8 w-auto" onClick={() => navigate("/home")} />
+          <a href="#" className="-m-1.5 p-1.5"></a>
         </div>
         <div className="flex lg:hidden">
           <button

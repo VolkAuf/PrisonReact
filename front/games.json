@@ -21,27 +21,27 @@
       "icon": "./src/assets/croc.png"
     },
     {
-      "name": "Automations",
+      "name": "Automations1",
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     },
     {
-      "name": "Automations",
+      "name": "Automations2",
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     },
     {
-      "name": "Integrations",
+      "name": "Integrations3",
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     },
     {
-      "name": "Security",
+      "name": "Security4",
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     },
     {
-      "name": "Analytics",
+      "name": "Analytics5",
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     }

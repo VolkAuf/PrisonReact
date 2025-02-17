@@ -1,8 +1,8 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { User } from "../../entities/User.ts";
+import { UserCredentials } from "../../entities/User.ts";
 import { useAuth } from "../../shared/hooks/useAuth.ts";
-import { checkIfUserExists, createUser } from "./authApi.ts";
+import { registerRequest } from "./authApi.ts";
 import Loader from "../../components/loader/Loader.tsx";
 import ContentCard from "../../components/common/ContentCard.tsx";
 import crocoImage from "../../assets/croc.png";
@@ -21,18 +21,18 @@ export default function Registration() {
 
     const data = Object.fromEntries(new FormData(e.currentTarget));
 
-    const user: User = {
+    const user: UserCredentials = {
       nickname: data["nickname"] as string,
       email: data["email"] as string,
       password: data["password"] as string,
     };
 
     try {
-      const isUserExists = await checkIfUserExists(user);
-      if (isUserExists) throw new Error("User already exists!"); //TODO: make error handler
-      await createUser(user);
-      login(user);
-      navigate("/home");
+      const userRes = await registerRequest(user);
+      if (userRes?.user) {
+        login(userRes.user);
+        navigate("/home");
+      } else alert(userRes?.message);
     } catch (error) {
       alert(error);
     } finally {

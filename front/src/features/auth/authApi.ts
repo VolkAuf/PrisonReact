@@ -1,28 +1,30 @@
-import { AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 import { axiosAuth } from "../../shared/libs/axios.ts";
-import { User, UserCredentials } from "../../entities/User.ts";
+import { UserCredentials, UserSessionData } from "../../entities/User.ts";
 
-export const checkIfUserExists = async (user: User) => {
-  return axiosAuth.get("/crocoUsers").then(({ data }: AxiosResponse<User[]>) => {
-    if (data && data.length > 0) {
-      const value = data.find((value) => value.email === user.email);
-      if (value) return true;
-    }
-    return false;
-  });
+interface UserResponse {
+  message: string;
+  user?: UserSessionData;
+}
+
+export const loginRequest = async (userCredentials: UserCredentials) => {
+  return postUserRequest(userCredentials, "login");
 };
 
-export const getUserByCredentials = async (credentials: UserCredentials) => {
-  return axiosAuth.get("/crocoUsers").then(({ data }: AxiosResponse<UserCredentials[]>) => {
-    if (data && data.length > 0) {
-      return (data as User[]).find(
-        (value) => value.email === credentials.email && value.password === credentials.password,
-      );
-    }
-    return null;
-  });
+export const registerRequest = async (userCredentials: UserCredentials) => {
+  return postUserRequest(userCredentials, "register");
 };
 
-export const createUser = async (user: User) => {
-  return axiosAuth.post("/crocoUsers", user);
+const postUserRequest = async (userCredentials: UserCredentials, uri: string) => {
+  const url = `${import.meta.env.VITE_SERVER_API_USERS}/${uri}`;
+  try {
+    const res = await axiosAuth.post(url, userCredentials);
+    return res.data as UserResponse;
+  } catch (error) {
+    console.log(error);
+    if (error instanceof AxiosError) {
+      return { message: error.message };
+    }
+    return { message: "Something went wrong" };
+  }
 };
