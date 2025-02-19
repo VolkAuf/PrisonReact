@@ -1,23 +1,23 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useAuth } from "../../shared/hooks/useAuth.ts";
 import { nanoid } from "nanoid";
-import { SocketResponse } from "../../entities/SocketResponse.ts";
+import { useUserSelector } from "../../store/userSlice.ts";
 import { socket } from "../../shared/libs/socket.ts";
+import { SocketResponse } from "../../entities/SocketResponse.ts";
 
 export default function CreateLobby() {
   const requestLiteral = "n";
   const location = useLocation();
   const navigate = useNavigate();
   const [users, setUsers] = useState<string[]>([]);
-  const { sessionData } = useAuth();
   const [lobbyName, setLobbyName] = useState("");
+  const user = useUserSelector();
+
   const handleCopyURL = async () => {
     await navigator.clipboard.writeText(`${window.location.href}/?${requestLiteral}=${lobbyName}`);
   };
 
   useEffect(() => {
-    //TODO: Check auth state
     const searchParams = new URLSearchParams(location.search);
     setLobbyName(searchParams.get(requestLiteral) ?? nanoid(10));
     navigate(location.pathname.replace(/\/$/, ""), { replace: true });
@@ -25,8 +25,8 @@ export default function CreateLobby() {
 
   useEffect(() => {
     if (lobbyName) {
-      console.log("sessionData ", sessionData);
-      socket.emit("login", sessionData); // Отправляем логин
+      console.log("sessionData ", user);
+      socket.emit("login", user); // Отправляем логин
       socket.emit("joinRoom", lobbyName); // Присоединяемся к комнате
 
       // Получаем обновленный список пользователей в комнате

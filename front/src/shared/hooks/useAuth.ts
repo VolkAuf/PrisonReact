@@ -1,21 +1,28 @@
-import { useContext } from "react";
-import { AuthContext } from "../../features/auth/AuthContext.ts";
+import { useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
+import { setUser, removeUser } from "../../store/userSlice.ts";
 import { UserSessionData } from "../../entities/User.ts";
 
 export const useAuth = () => {
-  const authContext = useContext(AuthContext);
+  const [cookies, setCookies, removeCookies] = useCookies();
+  const dispatch = useDispatch();
 
-  const isTempUser = (): boolean => {
-    return !!authContext?.userSessionData?.email;
-  };
-
-  const login = (userSessionData: UserSessionData) => {
-    authContext?.login(userSessionData);
+  const login = (usd: UserSessionData, jwt: string) => {
+    setCookies("jwt", JSON.stringify(jwt)); // later save jwt
+    dispatch(setUser(usd));
   };
 
   const logout = () => {
-    authContext?.logout();
+    removeCookies("jwt");
+    dispatch(removeUser());
   };
 
-  return { sessionData: authContext?.userSessionData, login, logout, isTempUser };
+  const checkIsAuthenticated = () => {
+    const jwt: string = cookies["jwt"];
+    return !!jwt;
+  };
+
+  const isAuthenticated = checkIsAuthenticated();
+
+  return { isAuthenticated, login, logout };
 };
