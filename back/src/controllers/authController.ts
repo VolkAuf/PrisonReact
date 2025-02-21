@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { createUser, getUser } from "../services/userService";
-import { User, UserSessionData } from "../models/user";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { createUser, getUser, getUserById } from "../services/userService";
+import { User, UserSessionData } from "../models/user";
 
 interface UserLoginRequest extends Request {
   body: {
@@ -18,6 +19,13 @@ interface UserRegisterRequest extends Request {
   };
 }
 
+interface GetCurrentUserRequest extends Request {
+  body: {
+    userId: number;
+  };
+}
+
+// TODO: move to global entities
 interface UserResponse extends Response {
   message: string;
   user?: UserSessionData;
@@ -81,6 +89,24 @@ export const loginUser = async (req: UserLoginRequest, res: Response) => {
 
   return res.status(200).json(
     createUserResponseHandler("Successfully authorized", {
+      id: dbUser.id,
+      email: dbUser.email,
+      nickname: dbUser.nickname,
+    }),
+  );
+};
+
+export const getCurrentUser = async (req: GetCurrentUserRequest, res: Response) => {
+  const userId = req.body.userId;
+
+  const dbUser = await getUserById(userId);
+
+  if (!dbUser) {
+    return res.status(400).json(createUserResponseHandler("User not found"));
+  }
+
+  return res.status(200).json(
+    createUserResponseHandler("Successfully", {
       id: dbUser.id,
       email: dbUser.email,
       nickname: dbUser.nickname,

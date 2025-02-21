@@ -11,6 +11,15 @@ export const getUser = async (email: string) => {
   });
 };
 
+export const getUserById = async (userId: number) => {
+  return axiosInstance.get("/crocoUsers").then(({ data }: AxiosResponse<User[]>) => {
+    if (data && data.length > 0) {
+      return (data as User[]).find((value) => value.id === userId);
+    }
+    return null;
+  });
+};
+
 export const getUsersByIds = async (ids: number[]) => {
   return axiosInstance.get("/crocoUsers").then(({ data }: AxiosResponse<User[]>) => {
     if (data && data.length > 0) {

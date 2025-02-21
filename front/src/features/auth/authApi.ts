@@ -1,11 +1,14 @@
 import { AxiosError } from "axios";
-import { axiosAuth } from "../../shared/libs/axios.ts";
+import axiosAuth from "../../shared/libs/axios.ts";
 import { UserCredentials, UserSessionData } from "../../entities/User.ts";
 
 interface UserResponse {
   message: string;
+  token?: string;
   user?: UserSessionData;
 }
+
+const requestURL = (uri: string) => `${import.meta.env.VITE_SERVER_API_USERS}/${uri}`;
 
 export const loginRequest = async (userCredentials: UserCredentials) => {
   return postUserRequest(userCredentials, "login");
@@ -16,8 +19,8 @@ export const registerRequest = async (userCredentials: UserCredentials) => {
 };
 
 const postUserRequest = async (userCredentials: UserCredentials, uri: string) => {
-  const url = `${import.meta.env.VITE_SERVER_API_USERS}/${uri}`;
   try {
+    const url = requestURL(uri);
     const res = await axiosAuth.post(url, userCredentials);
     return res.data as UserResponse;
   } catch (error) {

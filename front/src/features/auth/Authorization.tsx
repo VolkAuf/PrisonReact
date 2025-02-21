@@ -25,10 +25,10 @@ export default function Authorization() {
 
     try {
       const userRes = await loginRequest(userCredentials);
-      if (userRes?.user) {
-        const jwt = "CROCOTESTSTRINGJWT"; //fake jwt
-        login(userRes.user, jwt);
-      } else alert(userRes?.message);
+      userRes.token = "popi";
+      if (userRes.user && userRes.token) {
+        login(userRes.user, userRes.token);
+      } else alert(userRes.message);
     } catch (error) {
       alert(error);
     } finally {

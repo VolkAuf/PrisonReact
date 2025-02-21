@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { useAuth } from "../shared/hooks/useAuth.ts";
 
 interface AuthMiddlewareProps {
@@ -7,6 +7,15 @@ interface AuthMiddlewareProps {
 }
 
 export default function AuthMiddleware(props: AuthMiddlewareProps) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, setAxiosBearer } = useAuth();
+  console.log("sonsolelog");
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setAxiosBearer();
+    }
+    console.log("effect sonsolelog");
+  }, []);
+
   return isAuthenticated ? props.authorizedRoutes : props.unauthorizedRoutes;
 }
