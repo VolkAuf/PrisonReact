@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { AppState } from "./store.ts";
-import { UserSessionData } from "../entities/User.ts";
+import { UserSessionData } from "../entities/user.ts";
 
 export interface UserState {
   userSessionData: UserSessionData | null;

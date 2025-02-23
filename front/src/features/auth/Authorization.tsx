@@ -1,9 +1,9 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
-import { loginRequest } from "./authApi.ts";
+import { loginRequest } from "./userSessionApi.ts";
 import { useAuth } from "../../shared/hooks/useAuth.ts";
-import { UserCredentials } from "../../entities/User.ts";
+import { UserCredentials } from "../../entities/user.ts";
 import Loader from "../../components/loader/Loader.tsx";
 import ContentCard from "../../components/common/ContentCard.tsx";
 import crocoImage from "../../assets/croc.png";
@@ -25,11 +25,14 @@ export default function Authorization() {
 
     try {
       const userRes = await loginRequest(userCredentials);
-      if (userRes?.user) {
-        const jwt = "CROCOTESTSTRINGJWT"; //fake jwt
-        login(userRes.user, jwt);
-      } else alert(userRes?.message);
+      if (userRes.user && userRes.token) {
+        login(userRes.user, userRes.token);
+      } else {
+        console.error(userRes.message);
+        alert(userRes.message);
+      }
     } catch (error) {
+      console.error(error);
       alert(error);
     } finally {
       setIsLoading(false);

@@ -1,8 +1,8 @@
 import { FormEvent, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserCredentials } from "../../entities/User.ts";
+import { UserCredentials } from "../../entities/user.ts";
 import { useAuth } from "../../shared/hooks/useAuth.ts";
-import { registerRequest } from "./authApi.ts";
+import { registerRequest } from "./userSessionApi.ts";
 import Loader from "../../components/loader/Loader.tsx";
 import ContentCard from "../../components/common/ContentCard.tsx";
 import crocoImage from "../../assets/croc.png";
@@ -28,9 +28,8 @@ export default function Registration() {
 
     try {
       const userRes = await registerRequest(user);
-      if (userRes?.user) {
-        const jwt = "CROCOTESTSTRINGJWT"; //fake jwt
-        login(userRes.user, jwt);
+      if (userRes.user && userRes.token) {
+        login(userRes.user, userRes.token);
       } else alert(userRes?.message);
     } catch (error) {
       alert(error);

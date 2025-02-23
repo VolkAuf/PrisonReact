@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { createUser, getUser } from "../services/userService";
-import { User, UserSessionData } from "../models/user";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { createUser, getUser, getUserById } from "../services/userService";
+import { User, UserSessionData } from "../models/user";
 
 interface UserLoginRequest extends Request {
   body: {
@@ -18,16 +19,29 @@ interface UserRegisterRequest extends Request {
   };
 }
 
+interface GetCurrentUserRequest extends Request {
+  body: {
+    userId: number;
+  };
+}
+
+// TODO: move message to global entity
 interface UserResponse extends Response {
   message: string;
   user?: UserSessionData;
+  token?: string;
 }
 
-const createUserResponseHandler = (message: string, user?: UserSessionData): UserResponse => {
+const createUserResponseHandler = (message: string, user?: UserSessionData, token?: string): UserResponse => {
   return {
     message,
     user,
+    token,
   } as UserResponse;
+};
+
+const createToken = (id: string) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET_KEY!, { expiresIn: "1d" });
 };
 
 export const registerUser = async (req: UserRegisterRequest, res: Response) => {
@@ -49,11 +63,15 @@ export const registerUser = async (req: UserRegisterRequest, res: Response) => {
 
   if (success.status === 201) {
     return res.status(200).json(
-      createUserResponseHandler("Successfully registered", {
-        id: success.data.id,
-        email: success.data.email,
-        nickname: success.data.nickname,
-      }),
+      createUserResponseHandler(
+        "Successfully registered",
+        {
+          id: success.data.id,
+          email: success.data.email,
+          nickname: success.data.nickname,
+        },
+        createToken(success.data.id),
+      ),
     );
   }
 
@@ -80,7 +98,29 @@ export const loginUser = async (req: UserLoginRequest, res: Response) => {
   }
 
   return res.status(200).json(
-    createUserResponseHandler("Successfully authorized", {
+    createUserResponseHandler(
+      "Successfully authorized",
+      {
+        id: dbUser.id,
+        email: dbUser.email,
+        nickname: dbUser.nickname,
+      },
+      createToken(dbUser.id.toString()),
+    ),
+  );
+};
+
+export const getCurrentUser = async (req: GetCurrentUserRequest, res: Response) => {
+  const userId = req.body.userId;
+
+  const dbUser = await getUserById(userId);
+
+  if (!dbUser) {
+    return res.status(400).json(createUserResponseHandler("User not found"));
+  }
+
+  return res.status(200).json(
+    createUserResponseHandler("Successfully", {
       id: dbUser.id,
       email: dbUser.email,
       nickname: dbUser.nickname,

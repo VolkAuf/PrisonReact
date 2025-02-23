@@ -1,4 +1,4 @@
-import { Game } from "../../entities/Game.ts";
+import { Game } from "../../entities/game.ts";
 import ContentCard from "../../components/common/ContentCard.tsx";
 import GameCard from "../games/GameCard.tsx";
 import gameList from "../../../games.json";

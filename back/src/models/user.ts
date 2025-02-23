@@ -4,7 +4,7 @@ export interface User extends UserSessionData {
 
 //TODO: think about this
 export interface UserSessionData {
-  id?: number;
+  id: number;
   nickname: string;
   email: string;
 }

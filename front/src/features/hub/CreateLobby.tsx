@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { useUserSelector } from "../../store/userSlice.ts";
 import { socket } from "../../shared/libs/socket.ts";
-import { SocketResponse } from "../../entities/SocketResponse.ts";
+import { SocketResponse } from "../../entities/socketResponse.ts";
 
 export default function CreateLobby() {
   const requestLiteral = "n";

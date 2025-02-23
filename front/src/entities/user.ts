@@ -5,7 +5,6 @@ export interface UserCredentials {
 }
 
 export interface UserSessionData extends Omit<UserCredentials, "password"> {
-  id?: number;
+  id: number;
   nickname: string;
-  // TODO: add token later
 }
