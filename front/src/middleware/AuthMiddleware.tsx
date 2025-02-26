@@ -10,25 +10,18 @@ interface AuthMiddlewareProps {
 
 export default function AuthMiddleware(props: AuthMiddlewareProps) {
   const { isAuthenticated, setAxiosBearer, setUserSessionData } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (isAuthenticated) {
       setAxiosBearer();
-      setIsLoading(true);
       setUserSessionData()
         .catch((err) => console.log(err))
         .finally(() => setIsLoading(false));
-    }
+    } else setIsLoading(false);
   }, []);
 
-  return (
-    <>
-      {isLoading
-        ? createPortal(<Loader />, document.body)
-        : isAuthenticated
-          ? props.authorizedRoutes
-          : props.unauthorizedRoutes}
-    </>
-  );
+  if (isLoading) return createPortal(<Loader />, document.body);
+
+  return isAuthenticated ? props.authorizedRoutes : props.unauthorizedRoutes;
 }

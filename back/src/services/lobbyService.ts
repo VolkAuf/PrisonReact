@@ -19,3 +19,7 @@ export const createLobby = async (lobby: Lobby) => {
 export const updateLobby = async (lobby: Lobby) => {
   return axiosInstance.put(`/crocoLobby/${lobby.id}`, lobby).then(({ data }: AxiosResponse<Lobby>) => data);
 };
+
+export const deleteLobby = async (lobby: Lobby) => {
+  return axiosInstance.delete(`/crocoLobby/${lobby.id}`);
+};

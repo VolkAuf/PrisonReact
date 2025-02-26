@@ -59,7 +59,12 @@ export const registerUser = async (req: UserRegisterRequest, res: Response) => {
 
   const hashedPassword = await bcrypt.hash(user.password, 10);
 
-  const success = await createUser({ email: user.email, nickname: user.nickname, password: hashedPassword } as User);
+  const success = await createUser({
+    email: user.email,
+    nickname: user.nickname,
+    password: hashedPassword,
+    avatar: 1,
+  } as User);
 
   if (success.status === 201) {
     return res.status(200).json(
@@ -69,6 +74,7 @@ export const registerUser = async (req: UserRegisterRequest, res: Response) => {
           id: success.data.id,
           email: success.data.email,
           nickname: success.data.nickname,
+          avatar: success.data.avatar,
         },
         createToken(success.data.id),
       ),
@@ -104,6 +110,7 @@ export const loginUser = async (req: UserLoginRequest, res: Response) => {
         id: dbUser.id,
         email: dbUser.email,
         nickname: dbUser.nickname,
+        avatar: dbUser.avatar,
       },
       createToken(dbUser.id.toString()),
     ),
@@ -124,6 +131,7 @@ export const getCurrentUser = async (req: GetCurrentUserRequest, res: Response) 
       id: dbUser.id,
       email: dbUser.email,
       nickname: dbUser.nickname,
+      avatar: dbUser.avatar,
     }),
   );
 };

@@ -1,5 +1,5 @@
 import { axiosInstance } from "./axiosInstance";
-import { User } from "../models/user";
+import { User, UserCosmetics } from "../models/user";
 import { AxiosResponse } from "axios";
 
 export const getUser = async (email: string) => {
@@ -26,6 +26,17 @@ export const getUsersByIds = async (ids: number[]) => {
       return (data as User[]).filter((user: User) => !!ids.find((value) => value === user.id));
     }
     return null;
+  });
+};
+
+export const getUsersCosmeticByIds = async (ids: number[]) => {
+  const users = await getUsersByIds(ids);
+  if (!users) return null;
+  return users.map((user) => {
+    return {
+      nickname: user.nickname,
+      avatar: user.avatar,
+    } as UserCosmetics;
   });
 };
 

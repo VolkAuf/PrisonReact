@@ -1,47 +1,68 @@
 {
-  "objects": [
+  "previews": [
     {
       "name": "Analytics",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "gameType": "analytics",
+      "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     },
     {
       "name": "Engagement",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "gameType": "engagement",
+      "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     },
     {
       "name": "Security",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "gameType": "security",
+      "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     },
     {
       "name": "Integrations",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "gameType": "integrations",
+      "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     },
     {
       "name": "Automations1",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "gameType": "automations1",
+      "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     },
     {
       "name": "Automations2",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "gameType": "automations2",
+      "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     },
     {
       "name": "Integrations3",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "gameType": "integrations3",
+      "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     },
     {
       "name": "Security4",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "gameType": "security4",
+      "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     },
     {
       "name": "Analytics5",
+      "gameType": "analytics5",
+      "shortDescription": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "icon": "./src/assets/croc.png"
+    }
+  ],
+  "analytics": [
+    {
+      "title": "popi",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
+      "icon": "./src/assets/croc.png"
+    },
+    {
+      "title": "kaki",
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias aliquid, architecto autem corporis deleniti",
       "icon": "./src/assets/croc.png"
     }

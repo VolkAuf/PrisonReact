@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000;
 const server = createServer(app);
 export const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // Разрешить клиенту
+    origin: ["http://localhost:5173", "http://localhost:4173"], // Разрешить клиенту
     methods: ["GET", "POST"],
   },
 });

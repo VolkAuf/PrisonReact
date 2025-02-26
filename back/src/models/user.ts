@@ -3,8 +3,12 @@ export interface User extends UserSessionData {
 }
 
 //TODO: think about this
-export interface UserSessionData {
+export interface UserSessionData extends UserCosmetics {
   id: number;
-  nickname: string;
   email: string;
+}
+
+export interface UserCosmetics {
+  nickname: string;
+  avatar: number;
 }

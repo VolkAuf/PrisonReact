@@ -1,5 +1,6 @@
 import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
 import { Provider } from "react-redux";
+import { useMemo } from "react";
 import withAuth from "./middleware/withAuth.tsx";
 import { store } from "./store/store.ts";
 import Authorization from "./features/auth/Authorization.tsx";
@@ -28,7 +29,7 @@ export default function App() {
     </Routes>
   );
 
-  const routes = withAuth(authorizedRoutes, unauthorizedRoutes);
+  const routes = useMemo(() => withAuth(authorizedRoutes, unauthorizedRoutes), []);
 
   return (
     <Provider store={store}>

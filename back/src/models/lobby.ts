@@ -1,5 +1,14 @@
-export interface Lobby {
+import { UserCosmetics } from "./user";
+
+export interface Lobby<T = number> {
   id?: number;
   name: string;
-  users: number[];
+  gameType: string;
+  users: T[];
+}
+
+export interface LobbySocketData extends Lobby<UserCosmetics> {}
+
+export interface LobbySettings {
+  userCount: number;
 }
