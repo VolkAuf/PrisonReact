@@ -29,7 +29,7 @@ But that's just the beginning! In the future, we'll add more games, new cool fea
 - **Frontend:** React, TypeScript, Vite, Axios, WebSocket
 - **Backend:** Node.js, WebSocket, BCrypt
 - **UI Libraries:** TailwindCSS
-- **State Management:** React Context (Redux is planned for the future)
+- **State Management:** Redux
 
 ## 👥 Contributors
 
@@ -73,7 +73,7 @@ CrocoGames — это место, где игроки могут весело п
 - **Frontend:** React, TypeScript, Vite, Axios, WebSocket
 - **Backend:** Node.js, WebSocket, BCrypt
 - **UI-библиотеки:** TailwindCSS
-- **Система управления состоянием:** React Context (позднее планируется внедрить Redux)
+- **Система управления состоянием:** Redux
 
 ## 👥 Контрибьюторы
 
